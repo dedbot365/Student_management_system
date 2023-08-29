@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=Regular
+comment0.text=\r\n\ Base\ class\ Regular\ for\ the\ super\ class\ Student\ class\ is\ created.\r\n\ The\ four\ attributes\ specific\ to\ the\ Regular\ class\ is\ defined.\ \r\n\ Constructor\ is\ created\ that\ accepts\ ten\ different\ attributes.\r\n\ Values\ is\ initialized\u0000\ inside\ the\ constructor.\r\n\ On\ the\ constructor\ call\ set\ the\ value\ of\ various\ attributes\ by\ calling\ the\ setter\ method\ of\ the\ super\ class.\r\n\ Acessor\ methods\ specific\ to\ the\ base\ class\ is\ defined.\r\n\ \r\n\ @author\ (Subigyan\ Paudel)\r\n\ @version\ (05/07/2023)\r\n
+comment1.params=enrollmentID\ dateOfBirth\ courseName\ studentName\ dateOfEnrollment\ courseDuration\ tuitionFee\ numOfModules\ numOfCreditHours\ daysPresent
+comment1.target=Regular(int,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ int,\ double,\ int,\ int,\ double)
+comment2.params=
+comment2.target=int\ getNumOfModules()
+comment2.text=\ Getter\ method\ to\ get\ values\ for\ the\ attributes\ specific\ to\ the\ base\ class\ Regular\ which\r\n\ Attribute\ Specific\ to\ Base\ class\ are\ numOfModules,\ numOfCreditHours,\ daysPresent,\ isGrantedScholarship.\r\n
+comment3.params=
+comment3.target=int\ getNumOfCreditHours()
+comment4.params=
+comment4.target=double\ getDaysPresent()
+comment5.params=
+comment5.target=boolean\ getIsGrantedScholarship()
+comment6.params=isGrantedScholarship
+comment6.target=void\ setIsGrantedScholarship(boolean)
+comment7.params=daysPresent
+comment7.target=java.lang.String\ presentPercentage(double)
+comment8.params=courseName\ enrollmentId\ dateOfEnrollment
+comment8.target=java.lang.String\ grantCertificate(java.lang.String,\ int,\ java.lang.String)
+comment9.params=
+comment9.target=void\ display()
+numComments=10

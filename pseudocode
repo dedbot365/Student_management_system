@@ -1,0 +1,580 @@
+CREATE a public class StudentGUI
+DO 
+    DECLARE a studentDataList as an ArrayList
+    DECLARE a frame as a new JFrame
+    DECLARE panel, panelRegular, panelDropout as a new JPanel
+    DECLARE lblHomepageHeading,lblHomepagefillform,lblHeading, lblEnrollmentID, lblDateofEnrollment, lblStudentName, lblDateOfBirth, lblCourseName, lblBackground,
+    lblNoofModules,lblNoofremainingModules,lblRemainingfee,lblDateofDropout, lblTuitionFee, lblCourseDuration, lblCreditHours, lblPresentDays, lblMonthattended as a new JLabel
+    DECLARE txtEnrollmentID, txtStudentName, txtCourseName, txtNoofModules, txtTuitionFee, txtCourseDuration,txtCreditHours, txtPresentDays, txtRemainingfee, txtNoofRemainingModules, txtMonthsattended as a new JTextField
+    DECLARE dayComboBoxEnrollment, monthComboBoxEnrollment, yearComboBoxEnrollment, dayComboBoxDOB, monthComboBoxDOB, yearComboBoxDOB, dayComboboxDropout, monthComboboxDropout, yearComboboxDropout as a new JCombobox
+    DECLARE  btnRegular, btnDropout, btnSubmit, btnClear, btnBack, btnDisplay, btnGrantCertificate, btnPresentPercentage, btnRemoveStudent, btnCalculateRemainingAMT as a new JButton
+    DECLARE icon as new ImageIcon
+    DECLARE  attribute enrollmentID, courseDuration, numOfRemainingModules, numOfMonthsAttended, numOfModules, numOfCreditHours as integer using private
+    DECLARE  tuitionFee,daysPresent as double using private
+    DECLARE enrollmentIDString, dateOfBirth, courseName, dateOfEnrollment, studentName,courseDurationString, tuitionFeeString, yearofEnrollment, monthofEnrollment, dayOfEnrollment, yearofBirth, monthofBirth, dayOfBirth,numOfModulesString,numOfCreditHoursString,daysPresentString,yearofDropout,monthofDropout,dayOfDropout,numOfRemainingModulesString,numOfMonthsAttendedString,dateOfDropout as String using private
+        DO
+            CREATE a constructor StudentGUI without any argments
+            DO
+                SET studentDataList to new ArrayList of Student
+                SET frame to new JFrame along with the title "Student Registration System"
+                SET icon to new ImageIcon as "icon.png"
+                SET panel to new JPanel
+                SET panel's layout to null layout by passing null value to default setLayout method
+                
+                SET lblHomepageHeading to new JLabel with text "Welcome to Student Registration System"
+                SET lblHomepageHeading's font to new Font "Sans Serif", Font type BOLD, Font size 30
+                SET lblHomepageHeading's foreground to WHITE
+                SET lblHomepageHeading's setBounds with the values (245, 10, 590, 50)
+                ADD lblHomepageHeading to panel
+               
+                SET lblHomepagefillform to new JLabel with text "Please fill the form"               
+                SET lblHomepagefillform's font to new Font "Sans Serif", Font type PLAIN, Font size 18
+                SET lblHomepagefillform's foreground to WHITE
+                SET lblHomepagefillform's setBounds with the values (465, 223, 149, 25)
+                ADD lblHomepagefillform to panel
+
+                SET btnReular as new JButton with text in button "Regular Students"
+                SET btnRegular's font to new Font "Sans Serif", Font type BOLD, Font size 14 
+                SET btnRegular's background to new Color(255, 254, 244)
+                SET btnRegular's setBounds with the values (461, 284, 157, 43)
+                ADD btnRegular to panel
+                
+
+                SET btnDropout as new JButton with text in button "Dropout Student"
+                SET btnDropout's font to new Font "Sans Serif", Font type BOLD, Font size 14 
+                SET btnDropout's background to new Color(255, 254, 244)
+                SET btnDropout's setBounds with (461, 348, 157, 43)
+                ADD btnDropout to panel
+
+                ADD actionListener to btnRegular 
+                    DO
+                        CALL method regularGUIPanel() 
+                        END DO
+                ADD actionListener to btnDropout 
+                    DO
+                        CALL method dropoutGUIPanel()
+                        END DO
+
+                SET lblBackground to new JLabel with image as "background.jpg"
+                SET lblBackground's setBounds with the values (0, 0, 1066, 600)
+                ADD lblBackground to panel
+                
+                ADD panel to the frame using default add method
+                ADD icon image to the frame using default setIconImage method
+                SET frame's size to (1080,608)
+                SET frame's setResizable to false
+                SET frame's setDefaultCloseOperation to JFrame.EXIT_ON_CLOSE
+                SET frame's setVisible to true
+                
+                END DO
+        END DO
+    DO
+        CREATE a method regularGUIPanel that takes no argments
+        DO
+            SET panelRegular to new JPanel
+            SET panelRegular's layout to null layout by passing null value to default setLayout method
+            
+            SET lblHeading to new JLabel with text "Regular Students"
+            SET lblHeading's font to new Font "Sans Serif", Font type BOLD, Font size 26
+            SET lblHeading's foreground to WHITE
+            SET lblHeading's setBounds with the values (432, 114, 220, 36)
+            ADD lblHeading to panelRegular
+
+            SET lblEnrollmentID to new JLabel with text "Enrollment ID:"
+            SET lblEnrollmentID's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblEnrollmentID's foreground to WHITE
+            SET lblEnrollmentID's setBounds with the values (143, 178, 112, 22)
+            ADD lblEnrollmentID to panelRegular   
+
+            SET lblDateofEnrollment to new JLabel with text "Date of Enrollment:"
+            SET lblDateofEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblDateofEnrollment's foreground to WHITE
+            SET lblDateofEnrollment's setBounds with the values (539, 178, 148, 22)
+            ADD lblDateofEnrollment to the panelRegular
+
+            SET lblStudentName to new JLabel with text "Student Name:"
+            SET lblStudentName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblStudentName's foreground to WHITE
+            SET lblStudentName's setBounds with the values (143, 226, 112, 22)
+            ADD lblStudentName to the panelRegular
+
+            SET lblDateOfBirth to new JLabel with text "Date of Birth:"
+            SET lblDateOfBirth's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblDateOfBirth's foreground to WHITE
+            SET lblDateOfBirth's setBounds with the values (539, 226, 101, 22)
+            ADD lblDateOfBirth to the panelRegular
+
+            SET lblCourseName to new JLabel with text "Course Name:"
+            SET lblCourseName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblCourseName's foreground to WHITE
+            SET lblCourseName's setBounds with the values (143, 279, 112, 22)
+            ADD lblCourseName to the panelRegular 
+           
+            SET lblNoofModules to new JLabel with text "Modules:"
+            SET lblNoofModules's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblNoofModules's foreground to WHITE
+            SET lblNoofModules's setBounds with the values (539, 279, 112, 22)
+            ADD lblNoofModules to the panelRegular
+
+            SET lblTuitionFee to new JLabel with text "Tuition Fee:"
+            SET lblTuitionFee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblTuitionFee's foreground to WHITE
+            SET lblTuitionFee's setBounds with the values (540, 382, 112, 22)
+            ADD lblTuitionFee to the panelRegular
+
+            SET lblCourseDuration to new JLabel with text "Duration:"
+            SET lblCourseDuration's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblCourseDuration's foreground to WHITE
+            SET lblCourseDuration's setBounds with the values (144, 331, 112, 22)
+            ADD lblCourseDuration to the panelRegular
+
+            SET lblCreditHours to new JLabel with text "Credit Hours:"
+            SET lblCreditHours's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblCreditHours's foreground to WHITE
+            SET lblCreditHours's setBounds with the values (539, 331, 112, 22)
+            ADD lblCreditHours to the panelRegular
+
+            SET lblPresentDays to new JLabel with text "Present Days:"
+            SET lblPresentDays's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblPresentDays's foreground to WHITE
+            SET lblPresentDays's setBounds with the values (144, 382, 112, 22)
+            ADD lblPresentDays to the panelRegular
+
+            SET txtEnrollmentID to new JTextField
+            SET txtEnrollmentID's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtEnrollmentID's setBounds with the values(269, 173, 180, 32)
+            ADD txtEnrollmentID to the panelRegular
+
+            SET txtStudentName to new JTextField
+            SET txtStudentName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtStudentName's setBounds with the values(269, 221, 180, 32)
+            ADD txtStudentName to the panelRegular
+
+            SET txtCourseName to new JTextField
+            SET txtCourseName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtCourseName's setBounds with the values(269, 274, 180, 32)
+            ADD txtCourseName to the panelRegular
+
+            SET txtNoofModules to new JTextField
+            SET txtNoofModules's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtNoofModules's setBounds with the values(665, 274, 180, 32)
+            ADD txtNoofModules to the panelRegular
+
+            SET txtCourseDuration to new JTextField
+            SET txtCourseDuration's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtCourseDuration's setBounds with the values(269, 326, 180, 32)
+            ADD txtCourseDuration to the panelRegular
+
+            SET txtPresentDays to new JTextField
+            SET txtPresentDays's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtPresentDays's setBounds with the values(269, 377, 180, 32)
+            ADD txtPresentDays to the panelRegular
+
+            SET txtTuitionFee to new JTextField
+            SET txtTuitionFee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtTuitionFee's setBounds with the values(665, 377, 180, 32)
+            ADD txtTuitionFee to the panelRegular
+
+            SET txtCreditHours to new JTextField
+            SET txtCreditHours's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtCreditHours's setBounds with the values(665, 326, 180, 32)
+            ADD txtCreditHours to the panelRegular
+
+            SET btnSubmit to new JButton with text in button "Submit"
+            SET btnSubmit's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnSubmit's background to new Color(255, 254, 244)
+            SET btnSubmit's setBounds with the values (252, 423, 135, 30)
+            ADD btnSubmit to panelRegular
+            ADD actionListener to btnSubmit 
+                DO
+                    CALL method submitDataRegular()
+                    END DO
+
+            SET btnClear to new JButton with text in button "Clear"
+            SET btnClear's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnClear's background to new Color(255, 254, 244)
+            SET btnClear's setBounds with the values (403, 466, 135, 30)
+            ADD btnClear to panelRegular
+            ADD actionListener to btnClear  
+                DO
+                    CALL a method clearFields with an boolean argument value of isRegularPanel true
+                    END DO 
+
+            SET btnBack to new JButton with text in button "Back"
+            SET btnBack's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnBack's background to new Color(255, 254, 244)
+            SET btnBack's setBounds with the values (550, 466, 135, 30)
+            ADD btnBack to panelRegular
+
+            ADD actionListener to btnBack
+                DO
+                    SET visible to false for panelRegular
+                    SET visible to true for panel
+                    END DO
+
+            SET btnDisplay to new JButton with text in button "Display"
+            SET btnDisplay's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnDisplay's background to new Color(255, 254, 244)
+            SET btnDisplay's setBounds with the values (403, 423, 135, 30)
+            ADD btnDisplay to panelRegular
+            ADD actionListener to btnDisplay 
+                DO 
+                    CALL a method displayData with an boolean argument value of isRegularPanel true
+                    END DO
+
+            SET btnGrantCertificate to new JButton with text in button "Grant Certificate"
+            SET btnGrantCertificate's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnGrantCertificate's background to new Color(255, 254, 244)
+            SET btnGrantCertificate's setBounds with the values (697, 423, 135, 30)
+            ADD btnGrantCertificate to panelRegular
+            ADD actionListener to btnGrantCertificate 
+                DO
+                    CALL method grantCertificate()
+                    END DO
+
+            SET btnPresentPercentage to new JButton with text in button "Book"
+            SET btnPresentPercentage's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnPresentPercentage's background to new Color(255, 254, 244)
+            SET btnPresentPercentage's setBounds with the values (550, 423, 135, 30)
+            ADD btnPresentPercentage to panelRegular
+            ADD actionListener to btnPresentPercentage 
+                DO
+                    CALL method calculatePresentPercentage()
+                    END DO
+
+            SET dayComboBoxEnrollment to new JComboBox and CALL Accessor method getDayOptions() to get a list of days
+            SET dayComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET dayComboBoxEnrollment's setBounds with the values (696, 173, 60, 32)
+            ADD dayComboBoxEnrollment to the panelRegular
+
+            SET monthComboBoxEnrollment to new JComboBox and CALL Accessor method getMonthOptions() to get a list of months
+            SET monthComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET monthComboBoxEnrollment's setBounds with the values (765, 173, 100, 32)
+            ADD monthComboBoxEnrollment to the panelRegular
+
+            SET yearComboBoxEnrollment to new JComboBox and CALL Accessor method getYearOptions() to get a list of years
+            SET yearComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET yearComboBoxEnrollment's setBounds with the values (874, 173, 67, 32)
+            ADD yearComboBoxEnrollment to the panelRegular
+
+            SET dayComboBoxDOB to new JComboBox and CALL Accessor method getDayOptions() to get a list of days
+            SET dayComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET dayComboBoxDOB's setBounds with the values (696, 221, 60, 32)
+            ADD dayComboBoxDOB to the panelRegular
+
+            SET monthComboBoxDOB to new JComboBox and CALL Accessor method getMonthOptions() to get a list of months
+            SET monthComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET monthComboBoxDOB's setBounds with the values (765, 221, 100, 32)
+            ADD monthComboBoxDOB to the panelRegular
+
+            SET yearComboBoxDOB to new JComboBox and CALL Accessor method getYearOptions() to get a list of years
+            SET yearComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET yearComboBoxDOB's setBounds with the values (874, 221, 67, 32)
+            ADD yearComboBoxDOB to the panelRegular
+
+            SET lblBackground to new JLabel with image as "background.jpg"
+            SET lblBackground's setBounds with the values (0, 0, 1066, 600)
+            ADD lblBackground to panelRegular
+
+            ADD panelRegular to the frame using default add method
+            SET frame's size to (1080,608)
+            SET frame's setDefaultCloseOperation to JFrame.EXIT_ON_CLOSE
+            SET panelReular's setVisible to true
+            SET panel's setVisible to false
+            
+            END DO
+        END DO
+    DO
+        CREATE a method dropoutGUIPanel with no arguments
+        DO
+            SET panelDropout to new JPanel
+            SET panelDropout's layout to null layout by passing null value to default setLayout method
+
+            SET lblHeading to new JLabel with text in label "Dropout Students"
+            SET lblHeading's font to new Font "Sans Serif", Font type BOLD, Font size 26
+            SET lblHeading's foreground color to WHITE
+            SET lblHeading's setBounds with the values (432, 114, 220, 36)
+            ADD lblHeading to panelDropout
+
+            SET lblEnrollmentID to new JLabel with text "Enrollment ID:"
+            SET lblEnrollmentID's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblEnrollmentID's foreground to WHITE
+            SET lblEnrollmentID's setBounds with the values (143, 178, 112, 22)
+            ADD lblEnrollmentID to panelDropout
+
+            SET lblDateofEnrollment to new JLabel with text "Date of Enrollment:"
+            SET lblDateofEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblDateofEnrollment's foreground to WHITE
+            SET lblDateofEnrollment's setBounds with the values (539, 178, 148, 22)
+            ADD lblDateofEnrollment to panelDropout
+
+            SET lblStudentName to new JLabel with text "Student Name:"
+            SET lblStudentName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblStudentName's foreground to WHITE
+            SET lblStudentName's setBounds with the values (143, 226, 112, 22)
+            ADD lblStudentName to panelDropout
+
+            SET lblDateOfBirth to new JLabel with text "Date of Birth:"
+            SET lblDateOfBirth's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblDateOfBirth's foreground to WHITE
+            SET lblDateOfBirth's setBounds with the values (539, 226, 101, 22)
+            ADD lblDateOfBirth to panelDropout
+
+            SET lblNoofremainingModules to new JLabel with text "Rem Modules:"
+            SET lblNoofremainingModules's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblNoofremainingModules's foreground to WHITE
+            SET lblNoofremainingModules's setBounds with the values (540, 377, 112, 22)
+            ADD lblNoofremainingModules to panelDropout
+
+            SET lblTuitionFee to new JLabel with text "Tuition Fee:"
+            SET lblTuitionFee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblTuitionFee's foreground to WHITE
+            SET lblTuitionFee's setBounds with the values (539, 331, 112, 22)
+            ADD lblTuitionFee to panelDropout
+
+            SET lblCourseDuration to new JLabel with text "Duration:"
+            SET lblCourseDuration's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblCourseDuration's foreground to WHITE
+            SET lblCourseDuration's setBounds with the values (144, 331, 112, 22)
+            ADD lblCourseDuration to panelDropout
+
+            SET lblDateofDropout to new JLabel with text "Date of Dropout:"
+            SET lblDateofDropout's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblDateofDropout's foreground to WHITE
+            SET lblDateofDropout's setBounds with the values (540, 279, 126, 22)
+            ADD lblDateofDropout to panelDropout
+
+            SET lblMonthattended to new JLabel with text "Months Attended:"
+            SET lblMonthattended's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblMonthattended's foreground to WHITE
+            SET lblMonthattended's setBounds with the values (144, 384, 125, 22)
+            ADD lblMonthattended to panelDropout
+
+            SET lblRemainingfee to new JLabel with text "Remaining Fee:"
+            SET lblRemainingfee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET lblRemainingfee's foreground to WHITE
+            SET lblRemainingfee's setBounds with the values (144, 433, 119, 22)
+            ADD lblRemainingfee to panelDropout
+
+            SET txtStudentName to new JTextField
+            SET txtStudentName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtStudentName's setBounds with the values (289, 221, 180, 32)
+            ADD txtStudentName to panelDropout
+
+            SET txtCourseName to new JTextField
+            SET txtCourseName's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtCourseName's setBounds with the values (289, 274, 180, 32)
+            ADD txtCourseName to panelDropout
+
+            SET txtNoofRemainingModules to new JTextField
+            SET txtNoofRemainingModules's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtNoofRemainingModules's setBounds with the values (666, 372, 180, 32)
+            ADD txtNoofRemainingModules to panelDropout
+
+            SET txtCourseDuration to new JTextField
+            SET txtCourseDuration's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtCourseDuration's setBounds with the values (289, 326, 180, 32)
+            ADD txtCourseDuration to panelDropout
+
+            SET txtMonthsAttended to new JTextField
+            SET txtMonthsAttended's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtMonthsAttended's setBounds with the values (289, 377, 180, 32)
+            ADD txtMonthsAttended to panelDropout
+
+            SET txtTuitionFee to new JTextField
+            SET txtTuitionFee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtTuitionFee's setBounds with the values (666, 326, 180, 32)
+            ADD txtTuitionFee to panelDropout
+
+            SET txtRemainingFee to new JTextField
+            SET txtRemainingFee's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET txtRemainingFee's setBounds with the values (289, 428, 180, 32)
+            SET txtRemainingFee's editable to false
+            ADD txtRemainingFee to panelDropout
+
+            SET btnSubmit to new JButton with text in button "Submit"
+            SET btnSubmit's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnSubmit's background to new Color(255, 254, 244)
+            SET btnSubmit's setBounds with the values (506, 423, 135, 30)
+            ADD btnSubmit to panelRegular
+            ADD actionListener to btnSubmit 
+                DO
+                    CALL method submitDataDropout()
+                    END DO
+
+            SET btnDisplay to new JButton with text in button "Display"
+            SET btnDisplay's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnDisplay's background to new Color(255, 254, 244)
+            SET btnDisplay's setBounds with the values (653, 423, 135, 30)
+            ADD btnDisplay to panelRegular
+            ADD actionListener to btnDisplay 
+                DO 
+                    CALL a method displayData with an boolean argument value of isRegularPanel false
+                    END DO
+
+            SET btnClear to new JButton with text in button "Clear"
+            SET btnClear's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnClear's background to new Color(255, 254, 244)
+            SET btnClear's setBounds with the values (800, 423, 135, 30)
+            ADD btnClear to panelRegular
+            ADD actionListener to btnClear  
+                DO
+                    CALL a method clearFields with an boolean argument value of isRegularPanel false
+                    END DO 
+
+            SET btnRemoveStudent to new JButton with text in button "Remove Dropout"
+            SET btnRemoveStudent's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnRemoveStudent's background to new Color(255, 254, 244)
+            SET btnRemoveStudent's setBounds with the values (653, 466, 135, 30)
+            ADD btnRemoveStudent to panelRegular
+            ADD actionListener to btnRemoveStudent 
+                DO
+                    CALL a method removedropoutStudent()
+                    END DO
+
+            SET btnBack to new JButton with text in button "Back"
+            SET btnBack's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnBack's background to new Color(255, 254, 244)
+            SET btnBack's setBounds with the values (800, 466, 135, 30)
+            ADD btnBack to panelRegular
+
+            ADD actionListener to btnBack
+                DO
+                    SET visible to false for panelDropout
+                    SET visible to true for panel
+                    END DO
+
+            SET btnCalculateRemainingAMT to new JButton with text in button "Amt Remained"
+            SET btnCalculateRemainingAMT's font to new Font "Sans Serif", Font type BOLD, Font size 11 
+            SET btnCalculateRemainingAMT's background to new Color(255, 254, 244)
+            SET btnCalculateRemainingAMT's setBounds with the values (506, 466, 135, 30)
+            ADD btnCalculateRemainingAMT to panelRegular
+            ADD actionListener to btnCalculateRemainingAMT
+                DO
+                    CALL a method calculateRemainingAMT()
+                    END DO
+            
+
+            SET dayComboBoxEnrollment to new JComboBox and CALL Accessor method getDayOptions() to get a list of days
+            SET dayComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET dayComboBoxEnrollment's setBounds with the values (696, 173, 60, 32)
+            ADD dayComboBoxEnrollment to the panelRegular
+
+            SET monthComboBoxEnrollment to new JComboBox and CALL Accessor method getMonthOptions() to get a list of months
+            SET monthComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET monthComboBoxEnrollment's setBounds with the values (765, 173, 100, 32)
+            ADD monthComboBoxEnrollment to the panelRegular
+
+            SET yearComboBoxEnrollment to new JComboBox and CALL Accessor method getYearOptions() to get a list of years
+            SET yearComboBoxEnrollment's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET yearComboBoxEnrollment's setBounds with the values (874, 173, 60, 32)
+            ADD yearComboBoxEnrollment to the panelRegular
+
+            SET dayComboBoxDOB to new JComboBox and CALL Accessor method getDayOptions() to get a list of days
+            SET dayComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET dayComboBoxDOB's setBounds with the values (696, 221, 60, 32)
+            ADD dayComboBoxDOB to the panelRegular
+
+            SET monthComboBoxDOB to new JComboBox and CALL Accessor method getMonthOptions() to get a list of months
+            SET monthComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET monthComboBoxDOB's setBounds with the values (765, 221, 100, 32)
+            ADD monthComboBoxDOB to the panelRegular
+
+            SET yearComboBoxDOB to new JComboBox and CALL Accessor method getYearOptions() to get a list of years
+            SET yearComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET yearComboBoxDOB's setBounds with the values (874, 221, 60, 32)
+            ADD yearComboBoxDOB to the panelRegular
+
+            SET dayComboboxDropout to new JComboBox and CALL Accessor method getDayOptions() to get a list of days
+            SET dayComboboxDropout's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET dayComboboxDropout's setBounds with the values (697, 274, 60, 32)
+            ADD dayComboboxDropout to the panelRegular
+
+            SET monthComboBoxDOB to new JComboBox and CALL Accessor method getMonthOptions() to get a list of months
+            SET monthComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET monthComboBoxDOB's setBounds with the values (766, 274, 100, 32)
+            ADD monthComboBoxDOB to the panelRegular
+
+            SET yearComboBoxDOB to new JComboBox and CALL Accessor method getYearOptions() to get a list of years
+            SET yearComboBoxDOB's font to new Font "Sans Serif", Font type BOLD, Font size 14
+            SET yearComboBoxDOB's setBounds with the values (875, 274, 60, 32)
+            ADD yearComboBoxDOB to the panelRegular
+
+            SET lblBackground to new JLabel with image as "background.jpg"
+            SET lblBackground's setBounds with the values (0, 0, 1066, 600)
+            ADD lblBackground to panelDropout
+
+            ADD panelDropout to the frame using default add method
+            SET frame's size to (1080,608)
+            SET frame's setDefaultCloseOperation to JFrame.EXIT_ON_CLOSE
+            SET panelDropout's setVisible to true
+            SET panel's setVisible to false
+
+
+
+            ADD panelDropout to frame
+
+            END DO
+
+        END DO
+    
+
+    DO 
+        CREATE method submitDataRegular without any arguments
+            DO
+                SET enrollmentIDString to CALL txtEnrollmentID's getText
+                SET studentName to CALL txtStudentName's getText
+
+                SET yearofEnrollment to String cast value of yearComboBoxEnrollment's getSelectedItem
+                SET monthofEnrollment to String cast value of monthComboBoxEnrollment's getSelectedItem
+                SET dayofEnrollment to String cast value of dayComboBoxEnrollment's getSelectedItem
+
+                SET monthofDOB to String cast value of monthComboBoxDOB's getSelectedItem
+                SET dayofDOB to String cast value of dayComboBoxDOB's getSelectedItem
+                SET yearofDOB to String cast value of yearComboBoxDOB's getSelectedItem
+
+                SET courseName to CALL txtCourseName's getText
+                SET courseDurationString to CALL txtCourseDuration's getText
+                SET numOfModulesString to CALL txtNoofModules's getText
+                SET numOfCreditHoursString to CALL txtNoofCreditHours's getText
+                SET daysPresentString to CALL txtDaysPresent's getText
+                SET tuitionFeeString to CALL txtTuitionFee's getText
+                
+                END DO
+
+                IF (value of enrollmentIDString, courseName, studentName,courseDurationString, tuitionFeeString, numOfModulesString, numOfCreditHoursString, daysPresentString, dayOfBirth, monthofBirth, yearofBirth, yearofEnrollment, monthofEnrollment or dayOfEnrollment is empty)
+        
+                    THEN 
+                        Display Error Message on Dialog box to "Please enter all the fields"
+                            BREAK
+                    END IF
+                DO
+                    TRY
+                        SET enrollmentID to Integer value of enrollmentIDString
+                        SET daysPresent to Integer value of daysPresentString
+                        SET numOfCreditHours to Integer value of numOfCreditHoursString
+                        SET numOfModules to Integer value of numOfModulesString
+                        SET courseDuration to Integer value of courseDurationString
+                        SET tuitionFee to Double value of tuitionFeeString
+                    CATCH 
+                        DISPLAY Error Message on Dialog box to show "Invalid data entered please check"
+                        BREAK      
+                    END DO
+
+                IF  validateEnrollmentID(enrollmentID) doesnt validate enrollment ID 
+                    THEN
+                        DISPLAY Error Messagee on Dialog box to show "Enrollment ID already exists. Please enter a unique ID."
+                        BREAK
+                    END IF
+                IF method isValidName() doesnt gets valid if Student name or Course name passed as an argument 
+                    THEN
+                        DISPLAY Error Message on Dialog box to show "Invalid Name. Name should not contain any integers or specialCharacters."
+                        BREAK
+                    END IF 
+                    
+
+
+
+
+        
+    
